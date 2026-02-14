@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ultimate Blooming Rose</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #120012, #000);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    font-family: sans-serif;
+}
+
+/* HEART SNOW */
+.heart {
+    position: fixed;
+    top: -30px;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 20, 147, 0.9);
+    transform: rotate(-45deg);
+    animation: fall linear forwards;
+    pointer-events: none;
+}
+
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: inherit;
+    border-radius: 50%;
+}
+
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: 10px; top: 0; }
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(-45deg); }
+    100% { transform: translateY(110vh) rotate(-45deg); }
+}
+
+/* ROSE CONTAINER */
+.rose {
+    position: relative;
+    width: 300px;
+    height: 480px;
+    z-index: 2;
+}
+
+/* STEM */
+.stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 12px;
+    height: 250px; /* shortened */
+    background: linear-gradient(#2e7d32, #1b5e20);
+    transform: translateX(-50%);
+    border-radius: 6px;
+}
+
+/* LEAVES */
+.leaf {
+    position: absolute;
+    width: 80px;
+    height: 45px;
+    background: linear-gradient(to right, #2e7d32, #4caf50);
+    border-radius: 0 70% 0 70%;
+    top: 120px; /* moved higher */
+}
+
+.leaf::after {
+    content: "";
+    position: absolute;
+    width: 70%;
+    height: 2px;
+    background: rgba(255,255,255,0.3);
+    top: 50%;
+    left: 15%;
+}
+
+/* LEFT */
+.leaf.left {
+    right: 100%;
+    transform-origin: right center;
+    transform: rotate(-30deg);
+}
+
+/* RIGHT */
+.leaf.right {
+    left: 100%;
+    transform-origin: left center;
+    transform: rotate(30deg);
+}
+
+/* FLOWER */
+.flower {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    width: 180px;
+    height: 180px;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 25px rgba(255, 0, 80, 0.6));
+}
+
+/* Calyx (green base hiding stem top) */
+.calyx {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 40px;
+    height: 25px;
+    background: #2e7d32;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* PETALS */
+.petal {
+    position: absolute;
+    width: 90px;
+    height: 130px;
+    background: radial-gradient(circle at 50% 30%, #ff4d6d, #b3003c);
+    border-radius: 50%;
+    opacity: 0;
+    transform: scale(0.3);
+    transition: all 0.8s ease;
+}
+
+.p1 { top: 60px; left: 45px; }
+.p2 { top: 20px; left: 10px; transform: scale(0.3) rotate(-25deg); }
+.p3 { top: 20px; right: 10px; transform: scale(0.3) rotate(25deg); }
+.p4 { top: 0; left: 45px; }
+.p5 { top: 60px; right: 45px; }
+
+.flower.bloom .petal {
+    opacity: 1;
+}
+
+.flower.bloom .p1 { transform: scale(1); }
+.flower.bloom .p2 { transform: scale(1) rotate(-25deg); }
+.flower.bloom .p3 { transform: scale(1) rotate(25deg); }
+.flower.bloom .p4 { transform: scale(1); }
+.flower.bloom .p5 { transform: scale(1); }
+
+/* MESSAGE */
+.message {
+    position: absolute;
+    bottom: -80px;
+    width: 100%;
+    text-align: center;
+    color: #ff6f91;
+    font-size: 22px;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    text-shadow: 0 0 15px rgba(255, 0, 100, 0.6);
+}
+
+.show { opacity: 1; }
+</style>
+</head>
+
+<body>
+
+<div class="rose">
+    <div class="flower" id="flower">
+        <div class="calyx"></div>
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+    </div>
+
+    <div class="stem">
+        <div class="leaf left"></div>
+        <div class="leaf right"></div>
+    </div>
+
+    <div class="message" id="msg">
+        Happy Valentine’s Day ❤️
+    </div>
+</div>
+
+<script>
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+
+    const size = Math.random() * 15 + 10;
+    heart.style.width = size + "px";
+    heart.style.height = size + "px";
+
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = (Math.random() * 4 + 4) + "s";
+
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 8000);
+}
+
+window.onload = function () {
+    setInterval(createHeart, 250);
+
+    setTimeout(() => {
+        document.getElementById("flower").classList.add("bloom");
+    }, 500);
+
+    setTimeout(() => {
+        document.getElementById("msg").classList.add("show");
+    }, 1800);
+};
+</script>
+
+</body>
+</html>
