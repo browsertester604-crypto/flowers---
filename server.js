@@ -9,7 +9,7 @@ app.use(express.static(path.join(__dirname)));
 
 // Route to serve flower.html
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'flower.html'));
+  res.sendFile(path.join(__dirname, 'Flower.html'));
 });
 
 app.listen(PORT, () => {
